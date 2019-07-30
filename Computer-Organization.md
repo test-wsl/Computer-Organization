@@ -2,7 +2,7 @@
 
 ####  学习方法
 
-![计算机组成原理知识地图](https://static001.geekbang.org/resource/image/12/ff/12bc980053ea355a201e2b529048e2ff.jpg)
+![计算机组成原理知识地图](https://github.com/test-wsl/Computer-Organization/blob/master/img/zhishiditu.jpg?raw=true)
 
 * 基本组成
   * 运算器
@@ -35,4 +35,54 @@
     * What Every Programmer Should Know About Memory
     * 编码:隐匿在计算机软硬件背后的语言
     * 程序员的自我修养:链接,装载和库
-* 
+
+#### CPU主频和性能
+
+* 性能(时间倒数就是性能)
+  * 响应时间                   提升不容易
+  * 吞吐率                       堆硬件来提高性能
+  * 跑分软件          ([SPEC](https://www.spec.org/cpu2017/results/cpu2017.html))
+* 计算机的计时单位 CPU时钟
+  * 时间不准                  程序运行的时候需要等待其他因素的时间
+  * 程序的执行时间是 user time + sys time
+  * 程序的CPU执行时间 = CPU时钟周期 x 时钟周期时间
+    * 时钟周期  指令数X 每条指令的平均时钟周期数(CPI)
+    * 执行时间 = 指令数 X CPI X Clock Cycle Time
+      * 时钟周期  主频
+      * 平均时钟周期数CPI  一条指令的CPU Cycle
+      * 指令数 需要执行多少指令
+* 思考
+  * 实际运行![time](https://github.com/test-wsl/Computer-Organization/blob/master/img/time_seq.png?raw=true)
+    * 测试中使用了多核处理器,在处理时,分别分配了不同的CPU核心,会导致真实时间会小于user time + sys time .
+
+
+
+#### 穿越功耗强, 提高性能
+
+* 多放一些晶体管,提高时钟频率.让CPU变得 更快
+* CPU  超大规模集成电路
+  * 一个个晶体管组成,通过不断打开关闭晶体管,完成各种运算和功能
+    * 增加密度
+    * 提升主频  (散热)
+  * 一个CPU功耗
+    * 功耗 ~=1/2 x 负载电容 x 电压平方 x开关频率 x 晶体管数量
+* 满足并行计算提高性能
+  * 可以分解为几个可以并行计算的任务
+  * 确保几个人的结果可以汇总到一起
+  * 汇总阶段需要顺序来,一步一步来
+* 阿姆达尔定律
+  * 优化后的执行时间 = 受优化影响的执行时间 / 加速倍数 + 不受影响的执行时间
+* 提升性能的原则性问题
+  * 加速大概率事件
+  * 流水线提高性能
+  * 通过预测提高性能
+    * 分支和冒险
+    * 局部性原理
+* 思考
+  * 阅读
+    * 《计算机组成与设计：软 / 硬件接口》（第 5 版）的 1.7 和 1.10 节
+    * 《深入理解计算机系统》（第 3 版）的 1.9 节
+  * 软件开发运用类似的原则性问题提升性能
+
+
+
