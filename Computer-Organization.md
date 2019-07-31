@@ -86,3 +86,49 @@
 
 
 
+#### 计算机指令
+
+* 打孔卡编程
+
+* CPU执行各种计算机指令的逻辑机器
+
+  * 计算机指令集  不同CPU使用的不同
+  * 平时存储在存储器中的计算机程序            存储程序型计算机
+
+* 汇编语言
+
+  * Linux 上可以使用 gcc 和 objdump命令把代码和机器码打印出来
+  * 机器码和汇编代码是一一对应的
+  * 高级语言到汇编代码再到机器码  变成CPU可执行的计算机指令的过程
+
+* 解析指令和机器码
+
+  * 算术类指令                加减乘除
+
+  * 数据传输类指令         变量赋值,内存读写数据
+
+  * 逻辑类指令                 逻辑与或非
+
+  * 条件分支指令              if/esle
+
+  * 无条件跳转指令          
+
+    ![汇编代码](https://github.com/test-wsl/Computer-Organization/blob/master/img/huibiandaima.jpeg?raw=true)
+
+* MISP汇编代码([MISP](https://www.mips.com/mipsopen/))
+
+  * 32位整数,高6位操作码,剩下26位三种格式,分别为R,I,J
+
+    * R   算术和逻辑操作
+    * I    数据传输,条件分支,运算
+    * J    跳转指令(高26位都是跳转后的地址)
+
+    ![MSIP](https://github.com/test-wsl/Computer-Organization/blob/master/img/MISP.jpeg?raw=true)
+
+* 思考
+
+  * 参考资料
+    * 《计算机组成与设计：软 / 硬件接口》第 5 版的 2.17 小节
+
+
+
