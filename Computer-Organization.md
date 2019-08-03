@@ -180,7 +180,7 @@
       * 内存中使用栈的方法,后进先出的数据结构 , 压栈(压入数据),出栈(取出数据)
       * 栈底,栈顶
     * 栈指针
-    * ![POP_PUSH](https://github.com/test-wsl/Computer-Organization/blob/master/img/pop_push.jpeg?raw=true))
+    ![POP_PUSH](https://github.com/test-wsl/Computer-Organization/blob/master/img/pop_push.jpeg?raw=true)
     * 栈大小会出现栈溢出
       * 无限递归会创建出栈溢出
     * 函数内联会让复用的程序在程序调用的地方完全展开
@@ -188,3 +188,29 @@
 * 思考
   * 推荐
     * 《深入理解计算机系统（第三版）》的 3.7 小节《过程》
+
+
+#### ELF和静态链接 : 程序无法在Linux 和 Windows下运行
+* 编译,链接和装载:拆解程序执行
+  * 通过编译器编译汇编成汇编代码,再通过汇编器转化为CPU可以理解的机器码,CPU可以执行这些机器码
+  * .o文件为一个目标文件,通过链接器把多个文件条用各种函数链接起来形成一个可执行文件
+  ![C执行过程](https://github.com/test-wsl/Computer-Organization/blob/master/img/C_zhixng.jpg?raw=true)
+  * 可执行文件和目标文件的代码差不多,但是却很长,都是用同一种文件格式ELF格式,叫做 可执行和可链接文件格式
+  * ELF文件中,变量名,函数名都存放在一个叫做符号表的位置里,
+  ![ELF格式](https://github.com/test-wsl/Computer-Organization/blob/master/img/ELF.jpg?raw=true)
+    * .text Section 代码段
+    * .data Section 数据段
+    * .rel.text Section 重定位表
+    * .systab Section 符号表
+  * 链接器扫描所有输入的目标文件,所有符号表信息收集起来,构成一个全局的符号表--->根据重定位表,把不确定的跳转地址的代码,变成符号表里的地址 --->最后执行一次合并
+    * 只需要解析ELF文件,对应指令和数据加载到CPU执行
+* 为什么Linux和Windows下的程序不能一起执行
+  * 两个操作系统的可执行文件的格式不同,Linux下位ELF格式,Windows下为一种叫做PE的装载器.
+  * 分工合作 
+* 思考
+  * 推荐阅读
+    * 《程序员的自我修养——链接、装载和库》的 1～4 章
+  * readelf读取演示的符号表,看存在哪些信息,通过objdump读取出重定位表,查看有哪些信息
+    * readelf -s Link_example.o
+    * objdump -r link_example.o
+
