@@ -378,7 +378,7 @@
 * 两个开关中有一个打开,那么开关就打开    或(OR)
 * 从关掉,通电有磁场之后打开换成默认通电,通电后关闭,得到一个非操作    反向器
 
-![电报机]
+![电报机](https://github.com/test-wsl/Computer-Organization/blob/master/img/%E5%8F%8D%E5%90%91%E5%99%A8.jpg?raw=true)
 
 总结
 
