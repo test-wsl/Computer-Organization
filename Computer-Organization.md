@@ -225,19 +225,24 @@
   * 指令用到的地址位虚拟内存地址
   * 实际硬件里的空间 物理内存地址
   
-  ![
+  ![内存分段](https://github.com/test-wsl/Computer-Organization/blob/master/img/%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5.png?raw=true)
   
 * 内存分段(连续的内存空间)
   * 内存碎片问题    Linux Swap内存
   * 内存交换
   * 硬盘访问速度比内存慢很多,内存交换时会占用一个很占内存空间的程序,会卡顿
+  
+  ![内存交换](![åå­äº¤æ¢.png](https://github.com/test-wsl/Computer-Organization/blob/master/img/%E5%86%85%E5%AD%98%E4%BA%A4%E6%8D%A2.png?raw=true)
+  
 * 内存分页
   * 把物理内存空间切成固定一段尺寸的大小,这样一个连续的内存的物理地址,二十按照一个一个页来
   * 通常linux下会设置位4kb
   * getconf PAGE_SIZE  查看内存页大小
   * 没有了不能使用的碎片,只有被释放出来的很多的页   通过交换也只是少数页,不会花费太多时间,加载程序不需要一次性把程序加载到物理内存.
-<<<<<<< HEAD
+  <<<<<<< HEAD
   * 触发CPU缺页错误,捕获之后加载
+
+  ![内存分页](https://github.com/test-wsl/Computer-Organization/blob/master/img/%E5%86%85%E5%AD%98%E5%88%86%E9%A1%B5.png?raw=true)
 * 通过虚拟内存,内存交换,内存分页,可以不需要考虑物理内存地址,大小和当前分配空间的解决技术
 
 * 思考
@@ -245,4 +250,45 @@
     * 《程序员的自我修养——链接、装载和库》的第 1 章和第 6 章
   * JAVA中使用虚拟机的语言中,怎么装载到内存中
     * 不需要考虑物理分层,直接考虑对象本身的空间大小,物理硬件管理同意由jvm的操作系统解决
+
+
+
+#### 动态链接
+
+链接动静态,共享运行省内存
+
+* 链接 实现代码复用    ---->   标准化.模块化
+
+* 内存空间不够用
+
+因此引入了动态链接,之前遇到的是静态链接
+
+![C类库](https://github.com/test-wsl/Computer-Organization/blob/master/img/%E5%86%85%E5%AD%98%E5%8A%A8%E6%80%81%E5%BA%93%20C.jpg?raw=true)
+
+动态链接会加载到内存中的共享库
+
+* 文件
+  * windows 下的DLL文件
+  * linux下的.so文件
+* 要求
+  * 地址无关  代码是地址无关码   
+  * 可以接受特定的输入,进而确定操作,给出返回的结果
+  * 在不同的应用程序中,调用的动态链接库的虚拟内存地址不同,
+  * 动态代码库内部的函数调用使用相对地址就可以, 指令中使用的内存地址,不是一个绝对的地址空间,而是一个相对于当前指令的偏移量
+
+![动态连接共享库](https://github.com/test-wsl/Computer-Organization/blob/master/img/%E5%86%85%E5%AD%98%E5%8A%A8%E6%80%81%E5%BA%93%E4%B8%AD%E7%89%A9%E7%90%86%E7%A9%BA%E9%97%B4.jpg?raw=true)
+
+* 动态链接解决方案 PLT 和 GOT
+  * -fPIC 编译成一个地址无关代码
+  * 存在一张全局偏移表(GOF ,Global Offset Table )  
+  * 共享库的代码的物理内存共享,但是数据部分是各个动态链接他的应用程序各加载一份
+
+![GOT过程](https://github.com/test-wsl/Computer-Organization/blob/master/img/GOT%E8%A1%A8%E4%B8%AD%E5%86%85%E5%AE%B9.jpg?raw=true)
+
+* 同样功能的代码生成的共享库,只需要在内存里保留一份,通过动态连接,可以节省内存空间
+* 思考
+  * 推荐阅读
+    * 《程序员的自我修养：链接、装载和库》的第 7 章
+  * 动态链接修改地址数据进行间接跳转,调用不确定的位置的代码的思路.
+    * 
 
