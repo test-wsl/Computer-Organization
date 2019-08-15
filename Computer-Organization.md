@@ -543,3 +543,88 @@
   * 思考
     * BCD的定点数,7个比特表示连续的两位十进制数,32位是狗可以表示一个更大一点的数据范围
     * 如果需要表示负数,那么BCD编码可以表示的数据范围是多大.
+
+#### 浮点数和定点数(下) 
+
+###### 浮点数的二进制转化
+
+十进制表示位二进制
+
+> 输入一个9.1的浮点数,二进制里,变为一个"符号位s+指数位e+有效位数f"的组合
+>
+> 1. 转化为二进制
+>
+>    ​	9转化为 1001,小数部分转化为二进制为 0.0001100110011 
+>
+>    ​	![0.1](https://github.com/test-wsl/Computer-Organization/blob/master/img/0.1%E8%A1%A8%E7%A4%BA.jpg?raw=true)
+>
+> 2. 拼接起来
+>
+>    ​	1001.000110011001
+>
+> 3. 小数点左移三维变为
+>
+>    ​	1.00100110011001 x 2^3
+>
+> 4. s 符号位为 0 ,有效位数为 001001100110011001 指数为3,对应的为127的偏移量 , 对应的为130 , 为 10000010
+>
+> 5. 表示为  010000010 0010 001100110011001...
+>
+>    ​		![9.1](https://github.com/test-wsl/Computer-Organization/blob/master/img/9.1.jpeg?raw=true)
+>
+> [动态设置](https://www.h-schmidt.net/FloatConverter/IEEE754.html)
+
+
+
+###### 浮点数的加法和精度损失
+
+* 如何转化为IEEE-754标准
+  * 先对齐,在计算
+
+* 在进行计算时,需要右移计算,在右移过程中,最右侧的有效位就丢掉了,发生精度丢失.
+* 当两个数相差 2^24倍时,两数相加,不会发生变化
+
+![浮点数相加](https://github.com/test-wsl/Computer-Organization/blob/master/img/%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9B%B8%E5%8A%A0.jpg?raw=true)
+
+###### Kahan Summation 算法
+
+> 浮点数计算的时候可以容忍一定的精度损失 , 对于一些常见的应用场景,在积少成多的过程中,会出现许多的浮点数相加,累计值会越来越大,出现大树吃小数
+
+
+
+```java
+public class KahanSummation {
+  public static void main(String[] args) {
+    float sum = 0.0f;
+    float c = 0.0f;
+    for (int i = 0; i < 20000000; i++) {
+    	float x = 1.0f;
+    	float y = x - c;
+    	float t = sum + y;
+    	c = (t-sum)-y;
+    	sum = t;    	
+    }
+    System.out.println("sum is " + sum);   
+  }	
+}
+
+```
+
+在每次计算的过程中,都用一次减法,把当前加法计算中的损失精度记录下来,后面的循环中,把精度损失放在要加的小数上,做一次运算.
+
+[Kahan Summation](https://en.wikipedia.org/wiki/Kahan_summation_algorithm)
+
+###### 总结延伸
+
+* 一般情况中,需要使用定点数或者整数类型
+* 浮点数适合不需要有一个精确计算结果的情况
+* 累计产生的精度损失可以使用kahan summation算法解决
+
+* 推荐
+  * 《计算机组成与设计 硬件 / 软件接口》的 3.5.2 和 3.5.3 小节
+* 思考
+  * 64位的浮点数加法,两束相差多少的时候,小的数在加法中会发生完全丢失?
+
+
+
+#### 建立数据通路 指令+运算=CPU
