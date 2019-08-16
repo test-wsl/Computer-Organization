@@ -709,5 +709,67 @@ public class KahanSummation {
     * 空闲时 会停止执行, 切断时钟信号, CPU主频瞬间降低为 0  ,功耗降低为 0 ,空闲时间很短暂 ,任务管理器中只看到CPU频率下降 , 不会看到将为 0 ,从空闲恢复时 ,会接通时钟信号 , CPU频率会上升, 所以会看到CPU的频率的起伏
     * 指的系统层面的状态 , idle空闲状态 , cpu也在执行循环指令
 
+#### 建立数据通路（中）：指令+运算=CPU
 
+给定输入,就能得到固定的输出 , 这样的电路称为组合逻辑电路
 
+###### 时序逻辑电路
+
+* 可以自动运行
+  * 在接通之后可以不停的开启和关闭 , 进入一个自动运行的状态
+* 存储
+  * 计算结果存储在特定的电路 , 一旦输入有改变,输出也有改变
+* 时序协调  
+  * 各种指令的操作都有先后顺序 , 时序电路使得不同的时间按照时间顺序发送
+
+###### 时钟信号的硬件实现
+
+* 需要一个时钟
+
+  * 晶体振荡器实现电路信号 , 时钟信号
+
+    ![时钟信号](https://github.com/test-wsl/Computer-Organization/blob/master/img/%E6%97%B6%E9%92%9F%E4%BF%A1%E5%8F%B7.jpeg?raw=true)
+
+    ![时钟信号示意图](https://github.com/test-wsl/Computer-Organization/blob/master/img/%E6%97%B6%E9%92%9F%E4%BF%A1%E5%8F%B7%E7%A4%BA%E6%84%8F%E5%9B%BE.jpeg?raw=true)
+
+###### 反馈电路
+
+* 把电路的输出信号作为输入信号 ,回到当前电路 , 这样的电路叫做反馈电路
+
+* 一般反馈电路可以使用下面的电路表示 , 一个输出结果接回输入的反向器
+
+  ![反馈电路](https://github.com/test-wsl/Computer-Organization/blob/master/img/%E5%8F%8D%E9%A6%88%E7%94%B5%E8%B7%AF.jpg?raw=true)
+
+  ![或非门](https://github.com/test-wsl/Computer-Organization/blob/master/img/%E6%88%96%E9%9D%9E%E9%97%A8.jpg?raw=true)
+
+  
+
+###### 通过D触发器实现存储功能
+
+![RS触发器](https://github.com/test-wsl/Computer-Organization/blob/master/img/RS%E8%A7%A6%E5%8F%91%E5%99%A8.jpeg?raw=true)
+
+* 利用开关和相同的反馈电路 , 可以构造出有记忆的电路 , 可以在CPU中存储计算结果的计算结果的寄存器 , 也可作为存储器
+
+![RS触发器真值表](https://github.com/test-wsl/Computer-Organization/blob/master/img/RS%E8%A7%A6%E5%8F%91%E5%99%A8%E7%9C%9F%E5%80%BC%E8%A1%A8.jpeg?raw=true)
+
+* 触发器
+
+  * 接通开关 , 输出变为1 ,即使断开开关 , 输出还是1不变 , 接通S ,输出变为 0 ,输出也还是 0 ,当两个开关都断开的时候 , 最终的输出结果 , 取决于之前动作的输出结果
+
+* 复位置位触发器 
+
+  * 当开关都是0 的时候 , 对应的输出不是1或者 0 ,而是和Q的上一个状态一致
+
+    ![D触发器](https://github.com/test-wsl/Computer-Organization/blob/master/img/D%E8%A7%A6%E5%8F%91%E5%99%A8.jpeg?raw=true)
+
+  * 一个D型触发器只能控制一个比特的读写 , 但是如果多个同时并列在一起 , 可以把用同一个CLK信号控制作为所有D型触发器的开关 , 这就变成了N位的D型触发器 , 可以控制N位的读写
+
+###### 总结延伸
+
+* 程序需要存储 , 实现计算机的可存储和 可编程的功能
+* 推荐阅读
+  * 《编码：隐匿在计算机软硬件背后的语言》这本书的第 14 章和 16 章
+  * 《数字逻辑应用与设计》
+
+* CPU主频以及很高了 , 通常几GHz ,但是晶振并不能提供这样的频率 , 而是通过"外频+倍频"实现高频率的时钟信号 , 倍频和分频信号通过怎样的电路实现
+  * 
