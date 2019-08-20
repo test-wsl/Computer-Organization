@@ -947,7 +947,10 @@ Intel为了到达10GHz,在NetBurst架构上使用了超长的流水线,增加流
 * 需要引入乱序执行, 分支预测等技术
 * 推荐阅读
   * [<Modern Microprocessors A 90-Minute Guide!>](http://www.lighterra.com/papers/modernmicroprocessors/)
-  *  
 * 思考
   * 数据层面的依赖,我们在程序执行中,有其他什么以来情况?属于哪种冒险呢?
     * 
+
+
+
+#### 
